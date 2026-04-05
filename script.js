@@ -149,10 +149,13 @@ function setupMusicPlayer() {
   const status = document.getElementById("musicStatus");
   const time = document.getElementById("musicTime");
   const seek = document.getElementById("musicSeek");
+  const source = audio ? audio.querySelector("source") : null;
 
   if (!audio || !toggle || !status || !time || !seek) {
     return;
   }
+
+  audio.load();
 
   function updateTime() {
     const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
@@ -164,7 +167,9 @@ function setupMusicPlayer() {
   }
 
   toggle.addEventListener("click", async () => {
-    if (!audio.getAttribute("src")) {
+    const hasSource = Boolean(audio.currentSrc || (source && source.getAttribute("src")));
+
+    if (!hasSource) {
       status.textContent = "Add your song file to enable playback";
       return;
     }
