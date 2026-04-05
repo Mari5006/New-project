@@ -203,6 +203,32 @@
         </div>
       </section>
 
+      <section class="music section" id="music">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Wedding melody</p>
+          <h2>A song for our celebration</h2>
+        </div>
+        <div class="music-shell reveal">
+          <div class="music-copy">
+            <h3>Play our favorite wedding tune</h3>
+            <p>
+              Add your chosen audio file and let your guests enjoy a beautiful musical touch while they explore the invitation.
+            </p>
+          </div>
+          <div class="music-player">
+            <button class="music-control" id="musicToggle" type="button" aria-pressed="false">Play Song</button>
+            <div class="music-meta">
+              <strong id="musicStatus">Ready to play</strong>
+              <span id="musicTime">00:00 / 00:00</span>
+            </div>
+            <input id="musicSeek" class="music-seek" type="range" min="0" max="100" value="0" step="1" aria-label="Seek music" />
+          </div>
+        </div>
+        <audio id="weddingSong" preload="metadata" loop>
+          <source src="wedding-song.mp3" type="audio/mpeg" />
+        </audio>
+      </section>
+
       <section class="rsvp section" id="rsvp">
         <div class="section-heading reveal">
           <p class="eyebrow">Your response</p>
