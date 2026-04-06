@@ -132,81 +132,61 @@ function setupForm() {
   });
 }
 
-function formatTime(seconds) {
-  if (!Number.isFinite(seconds)) {
-    return "00:00";
-  }
-
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-
-  return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-}
-
 function setupMusicPlayer() {
   const audio = document.getElementById("weddingSong");
   const toggle = document.getElementById("musicToggle");
-  const status = document.getElementById("musicStatus");
-  const time = document.getElementById("musicTime");
-  const seek = document.getElementById("musicSeek");
   const source = audio ? audio.querySelector("source") : null;
 
-  if (!audio || !toggle || !status || !time || !seek) {
+  if (!audio || !toggle) {
     return;
   }
 
   audio.load();
 
-  function updateTime() {
-    const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
-    const current = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
-    const progress = duration > 0 ? (current / duration) * 100 : 0;
-
-    seek.value = String(progress);
-    time.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
-  }
-
   toggle.addEventListener("click", async () => {
     const hasSource = Boolean(audio.currentSrc || (source && source.getAttribute("src")));
 
     if (!hasSource) {
-      status.textContent = "Add your song file to enable playback";
+      toggle.textContent = "No Song";
       return;
     }
 
     try {
       if (audio.paused) {
         await audio.play();
-        toggle.textContent = "Pause Song";
+        toggle.textContent = "Pause";
         toggle.setAttribute("aria-pressed", "true");
-        status.textContent = "Now playing";
       } else {
         audio.pause();
-        toggle.textContent = "Play Song";
+        toggle.textContent = "Play";
         toggle.setAttribute("aria-pressed", "false");
-        status.textContent = "Paused";
       }
     } catch (error) {
-      status.textContent = "Unable to play this song";
+      toggle.textContent = "Play";
     }
   });
 
-  audio.addEventListener("loadedmetadata", updateTime);
-  audio.addEventListener("timeupdate", updateTime);
+  audio.addEventListener("play", () => {
+    toggle.textContent = "Pause";
+    toggle.setAttribute("aria-pressed", "true");
+  });
+  audio.addEventListener("pause", () => {
+    if (!audio.ended) {
+      toggle.textContent = "Play";
+      toggle.setAttribute("aria-pressed", "false");
+    }
+  });
   audio.addEventListener("ended", () => {
-    toggle.textContent = "Play Song";
+    toggle.textContent = "Play";
     toggle.setAttribute("aria-pressed", "false");
-    status.textContent = "Playback finished";
-    seek.value = "0";
   });
 
-  seek.addEventListener("input", () => {
-    if (!Number.isFinite(audio.duration) || audio.duration <= 0) {
-      return;
+  window.addEventListener("load", async () => {
+    try {
+      await audio.play();
+    } catch (error) {
+      toggle.textContent = "Play";
     }
-
-    audio.currentTime = (Number(seek.value) / 100) * audio.duration;
-    updateTime();
   });
 }
 

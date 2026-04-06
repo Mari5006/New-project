@@ -179,6 +179,23 @@ select {
   filter: none;
 }
 
+.floating-music-toggle {
+  position: fixed;
+  top: 1.35rem;
+  right: 1.35rem;
+  z-index: 35;
+  min-height: 48px;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid rgba(199, 154, 61, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 251, 246, 0.9);
+  color: var(--gold-deep);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(116, 82, 42, 0.1);
+  backdrop-filter: blur(10px);
+}
+
 .monogram-frame {
   position: absolute;
   inset: 12px 14px 22px;
@@ -719,70 +736,6 @@ select {
   font-size: 0.8rem;
 }
 
-.music-shell {
-  padding: 1.6rem;
-  border-radius: var(--radius-xl);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
-  gap: 1.4rem;
-  background: var(--surface);
-  border: var(--border);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(8px);
-}
-
-.music-copy h3 {
-  margin: 0 0 0.75rem;
-  font-family: "Playfair Display", serif;
-  font-size: 1.6rem;
-}
-
-.music-copy p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.music-player {
-  padding: 1.4rem;
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(247, 217, 219, 0.44));
-  border: 1px solid rgba(199, 154, 61, 0.16);
-  display: grid;
-  gap: 1rem;
-  align-content: center;
-}
-
-.music-control {
-  min-height: 54px;
-  border: 0;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #d4ad59, #b57d25);
-  color: var(--white);
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 14px 30px rgba(181, 125, 37, 0.24);
-}
-
-.music-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.music-meta strong {
-  color: var(--gold-deep);
-  font-weight: 600;
-}
-
-.music-seek {
-  width: 100%;
-  accent-color: var(--gold);
-}
-
 .rsvp-shell {
   padding: 1.6rem;
   border-radius: var(--radius-xl);
@@ -936,7 +889,6 @@ select {
   .hero,
   .invitation-layout,
   .venue-panel,
-  .music-shell,
   .rsvp-shell {
     grid-template-columns: 1fr;
   }
@@ -988,8 +940,9 @@ select {
     transform: translateX(-53%) rotate(-10deg);
   }
 
-  .music-player {
-    padding: 1.2rem;
+  .floating-music-toggle {
+    top: 1rem;
+    right: 1rem;
   }
 }
 
@@ -1101,9 +1054,12 @@ select {
     padding: 0.8rem;
   }
 
-  .music-meta {
-    flex-direction: column;
-    align-items: flex-start;
+  .floating-music-toggle {
+    top: 0.9rem;
+    right: 0.9rem;
+    min-height: 42px;
+    padding: 0.65rem 0.95rem;
+    font-size: 0.85rem;
   }
 
   .signature-scene-image {
