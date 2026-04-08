@@ -159,57 +159,58 @@ function setupForm() {
 function setupMusicPlayer() {
   const audio = document.getElementById("weddingSong");
   const toggle = document.getElementById("musicToggle");
+  const toggleIcon = document.getElementById("musicToggleIcon");
   const source = audio ? audio.querySelector("source") : null;
 
-  if (!audio || !toggle) {
+  if (!audio || !toggle || !toggleIcon) {
     return;
   }
 
   audio.load();
 
+  function setMusicButtonState(isPlaying) {
+    toggle.setAttribute("aria-pressed", String(isPlaying));
+    toggleIcon.textContent = isPlaying ? "❚❚" : "▶";
+  }
+
   toggle.addEventListener("click", async () => {
     const hasSource = Boolean(audio.currentSrc || (source && source.getAttribute("src")));
 
     if (!hasSource) {
-      toggle.textContent = "No Song";
+      toggleIcon.textContent = "♪";
       return;
     }
 
     try {
       if (audio.paused) {
         await audio.play();
-        toggle.textContent = "Pause";
-        toggle.setAttribute("aria-pressed", "true");
+        setMusicButtonState(true);
       } else {
         audio.pause();
-        toggle.textContent = "Play";
-        toggle.setAttribute("aria-pressed", "false");
+        setMusicButtonState(false);
       }
     } catch (error) {
-      toggle.textContent = "Play";
+      setMusicButtonState(false);
     }
   });
 
   audio.addEventListener("play", () => {
-    toggle.textContent = "Pause";
-    toggle.setAttribute("aria-pressed", "true");
+    setMusicButtonState(true);
   });
   audio.addEventListener("pause", () => {
     if (!audio.ended) {
-      toggle.textContent = "Play";
-      toggle.setAttribute("aria-pressed", "false");
+      setMusicButtonState(false);
     }
   });
   audio.addEventListener("ended", () => {
-    toggle.textContent = "Play";
-    toggle.setAttribute("aria-pressed", "false");
+    setMusicButtonState(false);
   });
 
   window.addEventListener("load", async () => {
     try {
       await audio.play();
     } catch (error) {
-      toggle.textContent = "Play";
+      setMusicButtonState(false);
     }
   });
 }
