@@ -1,4 +1,5 @@
 const weddingDateString = "2026-05-28T07:35:00+05:30";
+const RSVP_FORM_ENDPOINT = "https://formspree.io/f/xqegjvyp";
 
 function getCountdownElements() {
   return {
@@ -124,11 +125,34 @@ function setupForm() {
     event.preventDefault();
 
     const data = new FormData(form);
-    const name = data.get("name");
-    const attendance = data.get("attendance");
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      phone: String(data.get("phone") || "").trim(),
+      attendance: String(data.get("attendance") || "").trim(),
+      submittedAt: new Date().toISOString(),
+    };
 
-    formStatus.textContent = `Thank you, ${name}. Your RSVP has been noted as "${attendance}".`;
-    form.reset();
+    formStatus.textContent = "Submitting your RSVP...";
+
+    fetch(RSVP_FORM_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error("Formspree submission failed");
+        }
+
+        formStatus.textContent = `Thank you, ${payload.name}. Your RSVP has been saved successfully.`;
+        form.reset();
+      })
+      .catch(() => {
+        formStatus.textContent = "Could not save your RSVP right now. Please try again.";
+      });
   });
 }
 
