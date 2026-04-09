@@ -83,6 +83,9 @@ select {
   height: 44px;
   opacity: 0.42;
   animation: riseHeart 22s linear infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .heart::before {
@@ -380,6 +383,9 @@ select {
   border-radius: 50% 50% 50% 0;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(247, 217, 219, 0.35));
   animation: floatPetal 20s infinite ease-in-out;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .petal-1 {
@@ -591,6 +597,9 @@ select {
     0 0 6px rgba(255, 244, 202, 0.96),
     0 0 12px rgba(255, 232, 160, 0.72);
   animation: miniHeartFloat 3.8s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .mini-heart-1 {
@@ -664,6 +673,8 @@ select {
   width: min(100%, 1180px);
   margin: 0 auto;
   padding: 2rem clamp(1rem, 2.2vw, 1.4rem) 5rem;
+  content-visibility: auto;
+  contain-intrinsic-size: 760px;
 }
 
 .section-heading {

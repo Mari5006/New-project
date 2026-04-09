@@ -36,7 +36,7 @@
     <button class="floating-music-toggle" id="musicToggle" type="button" aria-pressed="false">
       <span class="music-toggle-icon" id="musicToggleIcon">▶</span>
     </button>
-    <audio id="weddingSong" preload="auto" loop autoplay>
+    <audio id="weddingSong" preload="metadata" loop autoplay>
       <source src="wedding-song.mp3" type="audio/mpeg" />
     </audio>
 
@@ -82,6 +82,8 @@
             <img
               src="couple-photo-new-cutout.png"
               alt="Wedding couple portrait"
+              decoding="async"
+              fetchpriority="high"
             />
           </figure>
         </aside>
@@ -190,6 +192,8 @@
             class="signature-scene-image"
             src="meet-bride-groom.png"
             alt="Meet the Bride and Groom royal wedding artwork"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </section>
